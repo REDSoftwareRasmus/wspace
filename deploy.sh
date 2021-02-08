@@ -1,5 +1,8 @@
+wpath="export WSPACE=$PWD/";
+echo $wpath >> ~/.bash_profile;
+
 wexec="wspace() { source $PWD/wspace.sh \$@; }"
-echo $wexec >> ~/.bash_profile
+echo $wexec >> ~/.bash_profile;
 
 while true; do
     echo ""
