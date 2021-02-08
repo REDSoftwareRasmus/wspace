@@ -1,5 +1,7 @@
 #!/bin/bash
 
+TYPE="space";
+
 load() { 
     echo Load $1
 }
