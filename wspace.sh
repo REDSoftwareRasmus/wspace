@@ -1,8 +1,17 @@
 #!/bin/bash
 version='v0.1'
 
-case $1 in
-    [version]* ) echo $version;
-    [Nn]* ) exit;;
-    * ) echo $'Empty command passed.\n';;
+argn=$#
+iarg=$1
+
+case $iarg in
+    -v*|--version*) 
+        echo $version;
+        return;;
+    -b*|--browser*) 
+        shift;
+        source ./actions/browser.sh $@; 
+        return;;
+    * ) 
+        source ./actions/space.sh $@;;
 esac
