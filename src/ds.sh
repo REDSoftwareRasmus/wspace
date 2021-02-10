@@ -8,7 +8,7 @@ DSAddPreset() {
 }
 
 DSAddLink() {
-    local FILE="$PWD/ds/$1/$2.txt";
+    local FILE="$WSPACE/ds/$1/$2.txt";
     local LINK=$3;
     
     DSAddPreset $1 $2 $FILE;
@@ -23,11 +23,27 @@ DSAddLink() {
 }
 
 DSRemovePreset() {
-    echo "hi" 
+    
+    local FILE="$WSPACE/ds/$1/$2.txt";
+    
+    if [ ! -f $FILE ]; then 
+        echo "Preset $2 does not exist. Create with wspace [-b] add [PRESET] [LINK]."
+        return
+    fi
+
+    read -p "Remove $1 preset $2? [y/n]: > " yn
+    case $yn in
+        [Yy]* ) 
+            rm $FILE; 
+            echo "Removed $1 preset $2."
+            ;;
+        [Nn]* ) return;;
+        * ) echo "Please answer yes [y] or no [n].";;
+    esac
 }
 
 DSRemoveLink() {
-    local FILE="$PWD/ds/$1/$2.txt";
+    local FILE="$WSPACE/ds/$1/$2.txt";
     local LINK=$3;
 
     if [ ! -f $FILE ]; then 

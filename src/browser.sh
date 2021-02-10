@@ -16,12 +16,15 @@ add() {
 }
 
 remove() { 
+    if [ $# -eq 1 ]; then 
+        DSRemovePreset $TYPE $@;
+        return 
+    fi
     if [ $# -eq 2 ]; then 
         DSRemoveLink $TYPE $@;
-        
-    else
-        echo "Error: Expected 2 arguments, got $#";
+        return 
     fi
+    echo "Error: Expected 1 or 2 arguments, got $#";
 }
 
 listPresets() { 
