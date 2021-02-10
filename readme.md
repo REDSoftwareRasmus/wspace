@@ -1,7 +1,5 @@
 
 # wspace - Workspace automator
-
-##`wspace`
 ## About
 CLI to store frequently visited websites and workspace setups in presets. 
 Divide setups into "browser" or "workspace" presets. Every preset contains either a list of website URLs or workspace setup commands. 
