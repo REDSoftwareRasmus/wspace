@@ -4,7 +4,25 @@
 TYPE="browser";
 
 load() { 
-    echo Load $1
+
+    local FILE="$WSPACE/ds/$TYPE/$1.txt"
+    if [ ! -f $FILE ]; then
+        echo "Error! Could not find preset \"$1\""
+        echo ""
+        return
+    fi
+
+    local LINKS=`cat $FILE`
+    if [ -z $LINKS ]; then 
+        echo ""
+        echo "There are no links in preset $TYPE."
+        echo "Create with wspace [-b] add [PRESET] [LINK]."
+        echo ""
+        return 
+    fi
+    
+    echo $FILE
+    echo $LINKS
 }
 
 add() { 
@@ -12,6 +30,7 @@ add() {
         DSAddLink $TYPE $@;
     else
         echo "Error: Expected 2 arguments, got $#";
+        echo ""
     fi
 }
 
@@ -25,11 +44,19 @@ remove() {
         return 
     fi
     echo "Error: Expected 1 or 2 arguments, got $#";
+    echo ""
 }
 
 listPresets() { 
     local PRESETS=`ls $WSPACE/ds/$TYPE`
-    local EXTENSION=".txt"
+    
+    if [ -z $PRESETS ]; then 
+        echo "There are no presets of type $TYPE."
+        echo "Create with wspace [-b] add [PRESET] [LINK]."
+        echo ""
+        return 
+    fi
+    
     echo ""
     echo "$TYPE Presets:"
     for f in $PRESETS
@@ -45,15 +72,14 @@ listPresets() {
 listLinks() { 
     local PRESET="$WSPACE/ds/$TYPE/$1.txt"
     if [ -f $PRESET ]; then 
-        echo ""
         echo "Preset $1:"
         while read line; do
             echo $line; 
         done < $PRESET;
     else
-        echo "ERROR: Unrecognized $TYPE preset $1!"
+        echo "ERROR: Unrecognized $TYPE preset $1!";
     fi
-    echo ""
+    echo "";
 }
 
 
@@ -65,10 +91,10 @@ case $iarg in
     add*) 
         shift; 
         add $@;;
-    rm*|remove*) 
+    remove*) 
         shift;
         remove $@;;
-    l*|list*)
+    list*)
         shift;
         test $# -eq 0 && listPresets $@; 
         test $# -eq 1 && listLinks $@; 
@@ -79,6 +105,7 @@ case $iarg in
             load $@;
         else
             echo "Error: Expected 1 argument, got $#";
+            echo "";
         fi
 esac
 

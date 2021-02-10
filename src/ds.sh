@@ -1,5 +1,7 @@
 #!/bin/bash
 
+EXTENSION=".txt"
+
 DSAddPreset() {
     if [ ! -f $FILE ]; then
         touch $FILE; 
