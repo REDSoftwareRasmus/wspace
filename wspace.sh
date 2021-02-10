@@ -10,8 +10,8 @@ case $iarg in
         return;;
     -b*|--browser*) 
         shift;
-        source ./src/browser.sh $@; 
+        source $WSPACE/src/browser.sh $@; 
         return;;
     * ) 
-        source ./src/space.sh $@;;
+        source $WSPACE/src/space.sh $@;;
 esac
