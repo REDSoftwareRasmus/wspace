@@ -47,42 +47,6 @@ remove() {
     echo ""
 }
 
-listPresets() { 
-    local PRESETS=`ls $WSPACE/ds/$TYPE`
-    
-    if [ -z $PRESETS ]; then 
-        echo "There are no presets of type $TYPE."
-        echo "Create with wspace [-b] add [PRESET] [LINK]."
-        echo ""
-        return 
-    fi
-    
-    echo ""
-    echo "$TYPE Presets:"
-    for f in $PRESETS
-    do
-        if test "${f#*$EXTENSION}" != "$f"
-        then
-            echo "$f" | sed -e "s/$EXTENSION$//"
-        fi
-    done
-    echo ""
-}
-
-listLinks() { 
-    local PRESET="$WSPACE/ds/$TYPE/$1.txt"
-    if [ -f $PRESET ]; then 
-        echo "Preset $1:"
-        while read line; do
-            echo $line; 
-        done < $PRESET;
-    else
-        echo "ERROR: Unrecognized $TYPE preset $1!";
-    fi
-    echo "";
-}
-
-
 
 argn=$#
 iarg=$@
@@ -96,8 +60,8 @@ case $iarg in
         remove $@;;
     list*)
         shift;
-        test $# -eq 0 && listPresets $@; 
-        test $# -eq 1 && listLinks $@; 
+        test $# -eq 0 && listPresets $TYPE $@; 
+        test $# -eq 1 && listLinks $TYPE $@; 
         test $# -ge 2 && echo "Error: Expected 0 or 1 arguments, got $#";
         ;;
     * ) 
