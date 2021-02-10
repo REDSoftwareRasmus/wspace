@@ -21,8 +21,10 @@ load() {
         return 
     fi
     
-    echo $FILE
-    echo $LINKS
+    for link in $LINKS;
+    do
+        open -na "Google Chrome" --args $link
+    done
 }
 
 add() { 
